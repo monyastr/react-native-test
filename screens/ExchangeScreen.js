@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Button
+  Button,
+  Dimensions
 } from "react-native";
 
 import Chart from "../components/Exchange/Chart.js";
@@ -13,7 +14,6 @@ import { Dropdown } from "react-native-material-dropdown";
 import { TextField } from "react-native-material-textfield";
 import { Icon } from "react-native-elements";
 import DateTimePicker from "react-native-modal-datetime-picker";
-
 export default class ExplorerScreen extends React.Component {
   static navigationOptions = {
     title: "Currency Converter"
@@ -120,7 +120,7 @@ export default class ExplorerScreen extends React.Component {
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
-        >
+        >         
           <View style={styles.symbolDropdownContainer}>
             <Dropdown
               containerStyle={{ width: "40%" }}
@@ -211,7 +211,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 20
+    marginBottom: 20,
+    marginHorizontal: 20
   },
   welcomeImage: {
     width: 100,
@@ -229,6 +230,13 @@ const styles = StyleSheet.create({
   },
   codeHighlightText: {
     color: "rgba(96,100,109, 0.8)"
+  },
+  slider: {
+    marginTop: 15,
+    overflow: "visible"
+  },
+  sliderContentContainer: {
+    paddingVertical: 10
   },
   codeHighlightContainer: {
     backgroundColor: "rgba(0,0,0,0.05)",
