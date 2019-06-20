@@ -11,7 +11,7 @@ const chartConfig = {
 };
 export default class Chart extends React.Component {
   render() {
-    let { labels = [], data = [0] } = this.props.data;
+    let {data: { labels = [], data = [0]}, rates = [] } = this.props;
     const _data = {
       labels,
       datasets: [
@@ -42,16 +42,16 @@ export default class Chart extends React.Component {
           yAxisLabel={"$"}
           chartConfig={chartConfig}
         />
-        {/* <PieChart
-          data={data}
+        <PieChart
+          data={rates}
           width={screenWidth}
           height={220}
           chartConfig={chartConfig}
-          accessor="price"
+          accessor="rate"
           backgroundColor="transparent"
           paddingLeft="15"
           absolute
-        /> */}
+        />
       </View>
     );
   }

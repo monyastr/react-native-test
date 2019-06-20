@@ -76,7 +76,6 @@ export default class ExplorerScreen extends React.Component {
   }
 
   onAmountChange(value) {
-    console.log(value);
     const { dataSource } = this.state;
     const symbol = this.toSymbol.current.state.value;
     const rate = dataSource.rates[symbol];
@@ -91,6 +90,20 @@ export default class ExplorerScreen extends React.Component {
     )
       .then(response => response.json())
       .then(historicalData => {
+        let rates = Object.values(historicalData.rates)[0];
+        rates = Object.entries(rates);
+        rates.length = 10;
+        rates = rates.map((item) => {          
+          let randomColor = () => {
+            let colorArray = [];
+            for ( let i = 0; i < 4 ; i++) {
+              colorArray.push(Math.floor(Math.random() * (255 - 1)) + 1);
+            }
+            return colorArray;
+          };
+          return {name: item[0], rate: item[1], color: `rgba(${randomColor()})`, legendFontColor: '#7F7F7F', legendFontSize: 15}
+        });
+        
         const labels = Object.keys(historicalData.rates);
         const data = Object.values(historicalData.rates).map(item => {
           return item[symbol];
@@ -98,7 +111,8 @@ export default class ExplorerScreen extends React.Component {
         this.setState(
           {
             isLoading: false,
-            historicalData: { labels, data }
+            historicalData: { labels, data },
+            rates
           },
           function() {}
         );
@@ -109,7 +123,7 @@ export default class ExplorerScreen extends React.Component {
   }
 
   render() {
-    const { dataSource, amountTo } = this.state;
+    const { dataSource, amountTo, rates } = this.state;
     let data = dataSource.rates
       ? Object.keys(dataSource.rates).map(item => {
           return { value: item };
@@ -184,7 +198,7 @@ export default class ExplorerScreen extends React.Component {
           </View>
 
           <View style={styles.welcomeContainer}>
-            <Chart data={this.state.historicalData} />
+            <Chart data={this.state.historicalData} rates={rates} />
           </View>
         </ScrollView>
       </View>
